@@ -3,6 +3,8 @@ def format_phone_number(func):
         result = func(x)
         if len(result) == 12:
             result = '+' + result
+        elif len(result) == 11:
+            result = '+3' + result
         else:
             result = '+38' + result
         return result
