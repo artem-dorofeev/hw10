@@ -58,7 +58,9 @@ class AddressBook(UserDict):
     #     for key, value in self.data.items():
     #         return f"{key} : {value}"
     #     raise StopIteration
-
+    
+    def __getitem__(self, key):
+        return super().__getitem__(key)
   
     def __str__(self) -> str:
         return "\n".join(str(r) for r in self.data.values())
