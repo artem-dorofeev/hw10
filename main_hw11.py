@@ -1,4 +1,4 @@
-from classes_bot_hw11 import AddressBook, Name, Phone, Record
+from classes_bot_hw11 import AddressBook, Name, Phone, Record, Birth
 from sanitize import sanitize_phone_number
 from datetime import datetime
 
@@ -67,8 +67,10 @@ def change_command(*args):
         return rec.change_phone(old_phone, new_phone)
     return f"Немає {name} в списку кнтактів"
 
+
 def hello_func(text=None):
     return f"Привіт, чим можу допомогти?"
+
 
 def exit_command(*args):
     return "До побачення"
@@ -79,7 +81,18 @@ def unknown_command(*args):
 
 
 def show_all_command(*args):
-    return address_book
+    for key in address_book.keys():
+        print(key)
+    # return address_book
+
+
+def get_birth(*args):
+    name = Name(args[0].capitalize())
+    print(args[0], args[1])
+    birh = Birth(datetime.strptime(args[1], '%d.%m.%Y'))
+    # birh = Birth(args[1])
+    print(type(name), type(birh))
+    return birh
 
 
 COMMANDS = {
@@ -88,17 +101,19 @@ COMMANDS = {
     exit_command: ("до побачення", "до зустрічі", "exit", "by", "пока", "end"),
     show_all_command: ("show all", "показати все"),
     hello_func: ("hello", "hi", "привіт"),
-    phone_print: ("phone", "друк", "print")
+    phone_print: ("phone", "друк", "print"),
+    get_birth: ("birthday", "birth")
 }
 
 
-def parser(text:str):
+def parser(text: str):
     for cmd, kwds in COMMANDS.items():
         for kwd in kwds:
             if text.lower().startswith(kwd):
                 data = text[len(kwd):].strip().split()
-                return cmd, data 
+                return cmd, data
     return unknown_command, []
+
 
 def main():
     while True:
@@ -108,6 +123,7 @@ def main():
         print(result)
         if cmd == exit_command:
             break
+
 
 if __name__ == "__main__":
     main()
