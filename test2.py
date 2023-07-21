@@ -9,7 +9,7 @@ class AdrBook(UserDict):
         return f"Контакт {record} додано успішно"
 
     def __iter__(self) -> Iterator:
-        return super().__iter__()
+        return self
 
     def __next__(self):
         pass
@@ -41,7 +41,7 @@ iterator = DictionaryIterator(my_dict, 5)
 for key in iterator:
     print(key)
 
-print(iterator)
+# print(iterator)
 # new_dict = AdrBook(my_dict)
 # new_dict2 = AdrBook()
 # print(type(new_dict))
