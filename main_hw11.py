@@ -1,4 +1,4 @@
-from classes_bot_hw11 import AddressBook, Name, Phone, Record, Birth
+from classes_bot_hw11 import AddressBook, Name, Phone, Record, Birthday
 from sanitize import sanitize_phone_number
 from datetime import datetime
 
@@ -81,18 +81,21 @@ def unknown_command(*args):
 
 
 def show_all_command(*args):
-    for key in address_book.keys():
-        print(key)
-    # return address_book
+    for rec in address_book.iterator():
+        print(rec)
+        print("next page")
+    return f"адресна книга надрукована"
+
 
 
 def get_birth(*args):
     name = Name(args[0].capitalize())
     print(args[0], args[1])
-    birh = Birth(datetime.strptime(args[1], '%d.%m.%Y'))
-    # birh = Birth(args[1])
-    print(type(name), type(birh))
-    return birh
+    # birh = Birthday(datetime.strptime(args[1], '%d.%m.%Y'))
+    birth = Birthday(args[1])
+    # # birh = Birth(args[1])
+    # print(type(name), type(birh))
+    return f"До контакта {name} додана дата народження {birth}"
 
 
 COMMANDS = {

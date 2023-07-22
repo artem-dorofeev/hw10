@@ -1,7 +1,5 @@
 from collections import UserDict
-# from collections.abc import Iterator
 from datetime import datetime
-# from itertools import islice
 
 class Field:
     def __init__(self, value) -> None:
@@ -28,13 +26,16 @@ class Birthday(Field):
     def __init__(self, value) -> None:
         self.__value = None
         self.value = value
-        # self.time_birth = datetime.strptime(value, '%d.%m.%Y')
-        super().__init__(value)
+        # self.name = value[0]
+        # print(f'Birth print 1 {self.name}')
+        # self.time = value[0]
+        # print(f"birth print2 {datetime.strptime(self.time, '%d.%m.%Y')}")
+        # super().__init__(value)
 
     @property
     def value(self):
         return self.__value
-
+    
     @value.setter
     def value(self, value):
         try:
@@ -43,7 +44,7 @@ class Birthday(Field):
             raise BirthdayError()
     
     def __str__(self):
-        return self.__value.strftime("%d.%m.%Y")
+        return self.__value.strftime("%Y %d.%m.%Y")
 
     # def ___str___(self):
     #     return datetime.strptime(self.time, '%d.%m.%Y')
@@ -55,6 +56,7 @@ class Record:
         self.phones = []
         if phone:
             self.phones.append(phone)
+        self.birthday = birthday
 
     def add_phone(self, phone: Phone):
         if phone.value not in [p.value for p in self.phones]:
@@ -75,8 +77,10 @@ class Record:
         next_birth = datetime(current_date.year, birth.month, birth.day)
         if next_birth < current_date:
             next_birth = datetime(current_date.year + 1, birth.month, birth.day)
+
         day_for_birth = next_birth - current_date
         return day_for_birth.days
+
 
     def __str__(self) -> str:
         return f"{self.name}: {', '.join(str(p) for p in self.phones)}"
@@ -85,6 +89,10 @@ class Record:
 class AddressBook(UserDict):
     def add_record(self, record: Record):
         self.data[str(record.name)] = record
+        # print(self.data)
+        # print(len(self.data))
+        # print(str(self))
+        # print()
         return f"Контакт {record} додано успішно"
     
     def iterator(self, n=3):
@@ -105,3 +113,15 @@ class AddressBook(UserDict):
 
     def __str__(self) -> str:
         return "\n".join(str(r) for r in self.data.values())
+
+adb = AddressBook()
+cont = Name("Artem")
+ph = Phone("0009998877")
+print(cont)
+# birth = Birthday("16.02.1979")
+# print(birth)
+
+rec = Record(cont, ph)
+print(rec)
+adb.add_record(rec)
+print(adb)
